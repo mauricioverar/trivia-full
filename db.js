@@ -6,7 +6,7 @@ const uri = process.env.MONGODB_URL
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(uri) // basedato nube mongodb
+    await mongoose.connect(uri || 'mongodb://localhost/testdb') // basedato nube mongodb (produccion) ó conectarse localmente a basedatos testdb (desarrollo)
     console.log('Mongodb conectada')
   } catch (error) {
     console.log(error)
