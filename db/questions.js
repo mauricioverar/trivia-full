@@ -51,5 +51,5 @@ async function create_question (question, answer_true, false1, false2, false3, f
   return rows[0]
 }
 
-// module.exports = { get_questions, create_question }
+module.exports = { get_questions, create_question }
 

@@ -30,4 +30,4 @@ async function get_answer(dat) {
 }
 
 
-// module.exports= { get_answer}
+module.exports= { get_answer}

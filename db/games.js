@@ -75,4 +75,4 @@ async function create_game(score, percentage, user_id) {
   return resp.rows
 }
 
-// module.exports = { get_games, create_game }
+module.exports = { get_games, create_game }
