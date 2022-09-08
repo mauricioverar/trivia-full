@@ -14,11 +14,11 @@ const config = {
 }
 
 // const pool = new Pool(config)
-const pool = new Pool(config || {
+const pool2 = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
 })
 
-module.exports = {pool};
+module.exports = {pool2};

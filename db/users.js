@@ -1,5 +1,5 @@
 // const pool = require('./pool.js')
-const { pool } = require('./pool') // pool creado en pool.js
+const { pool2 } = require('./pool') // pool creado en pool.js
 const User = require('../models/users')
 
 const api_users = async (req, res) => {
@@ -7,7 +7,7 @@ const api_users = async (req, res) => {
   res.json(users)  
 }
 const get_ping = async (req, res) => {
-  const resul = await pool.query(`SELECT NOW()`)
+  const resul = await pool2.query(`SELECT NOW()`)
   // const users = await User.find()
   res.send({
     message: resul.rows[0]
@@ -16,7 +16,7 @@ const get_ping = async (req, res) => {
 
 async function create_table() {
   // 1. Solicito un 'cliente' al pool de conexiones
-  const client = await pool.connect()
+  const client = await pool2.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   await client.query(`
