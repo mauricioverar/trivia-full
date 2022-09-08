@@ -1,7 +1,7 @@
 const { Router } = require('express')
-const { get_questions, create_question } = require('../db/questions')
-const { get_games, create_game } = require('../db/games.js')
-const { get_answer } = require('../db/answers.js')
+// const { get_questions, create_question } = require('../db/questions')
+// const { get_games, create_game } = require('../db/games.js')
+// const { get_answer } = require('../db/answers.js')
 const { api_users, get_ping } = require('../db/users')
 const { pool } = require('../pg.js') // pool creado en pg.js
 
@@ -10,9 +10,9 @@ const router = Router()
 // res api
 router.get('/api/users', api_users)
 router.get('/ping', get_ping)
-/* router.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.render('index.html')
-}) */
+})
 
 // Vamos a crear un middleware para ver si el usuario está logueado o no
 function protected_route(req, res, next) {
@@ -28,28 +28,20 @@ function protected_route(req, res, next) {
 
 
 // index GET
-router.get('/', protected_route, async (req, res) => {
-
+/* router.get('/', protected_route, async (req, res) => {
   req.session.user
   req.session.name_us
-
   try {
-
     if (req.session.name_us == '' || req.session.name_us == 'all') {
       req.session.name_us = undefined
     }
     const games = await get_games(req.session.name_us)
-
-    const toplay = await get_games(0)
-
-    
+    const toplay = await get_games(0)    
     res.render('index.html', { games, toplay })
-
   } catch (error) {
     console.log(error)
   }
-
-})
+}) */
 
 
 // new_question GET
