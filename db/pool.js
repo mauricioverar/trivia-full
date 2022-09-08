@@ -12,6 +12,13 @@ const config = {
   connectionTimeoutMillis: 2000,
   port: 5432
 }
-const pool = new Pool(config)
 
-module.exports = pool;
+// const pool = new Pool(config)
+const pool = new Pool(config || {
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
+
+module.exports = {pool};

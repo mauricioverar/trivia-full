@@ -1,5 +1,5 @@
 // const pool = require('./pool.js')
-const { pool } = require('../pg') // pool creado en pool.js
+const { pool } = require('./pool') // pool creado en pool.js
 const User = require('../models/users')
 
 const api_users = async (req, res) => {
