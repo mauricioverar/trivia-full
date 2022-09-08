@@ -75,4 +75,4 @@ async function create_user(name, email, password) {
 }
 
 // module.exports = { get_user, create_user }
-module.exports = { api_users, get_ping }
+module.exports = { api_users, get_ping, get_user, create_user }
