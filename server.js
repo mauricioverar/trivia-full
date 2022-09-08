@@ -1,6 +1,6 @@
 const express = require('express')
-const session = require('express-session')
-const pgSession = require('connect-pg-simple')(session)
+// const session = require('express-session')
+// const pgSession = require('connect-pg-simple')(session)
 const path = require('path') // unir rutas o directorios
 const nunjucks = require('nunjucks') // path chokidar
 const flash = require('connect-flash') // alerts
@@ -29,7 +29,7 @@ app.use(express.static('public'))
 
 // se configura uso de sesiones
 // https://github.com/voxpelli/node-connect-pg-simple
-app.use(session({
+/* app.use(session({
   store: new pgSession({
     pool: pool
   }),
@@ -37,7 +37,7 @@ app.use(session({
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }
 }))
-
+ */
 // se configura nunjucks
 const nunj_env = nunjucks.configure(path.resolve(__dirname, "views"), {
   express: app,
@@ -79,7 +79,7 @@ app.get('/api/users', async (req, res) => {
 app.use(flash())
 
 // rutas
-app.use(require('./routes/auth'))
+// app.use(require('./routes/auth'))
 app.use(require('./routes/routes'))
 
 app.listen(port, () => {
