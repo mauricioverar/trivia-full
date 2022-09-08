@@ -54,32 +54,13 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 */
 
-// ruta index
-/* app.get('/', (req, res) => {
-  res.render('index.html')
-}) */
 
-/* // res api
-app.get('/api/users', async (req, res) => {
-  const users = await User.find()
-  res.json(users)
-  // res.json([{name: 'us1'}, {name: 'us2'}])
-}) */
-
-/* app.get('/ping', async (req, res) => {
-  const resul = await pool.query(`SELECT NOW()`)
-  // const users = await User.find()
-  res.send({
-    message: resul.rows[0]
-  }) // desde postgresql
-  // res.json([{name: 'us1'}, {name: 'us2'}])
-}) */
 
 // se configura uso de mensajes flash
 app.use(flash())
 
 // rutas
-// app.use(require('./routes/auth'))
+app.use(require('./routes/auth'))
 app.use(require('./routes/routes'))
 
 app.listen(port, () => {

@@ -33,9 +33,9 @@ async function create_table() {
 }
 create_table()
 
-/* async function get_user(email) {
+async function get_user(email) {
   // 1. Solicito un 'cliente' al pool de conexiones
-  const client = await pool.connect()
+  const client = await pool2.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const { rows } = await client.query(
@@ -47,14 +47,14 @@ create_table()
 
   // 4. retorno el primer usuario, en caso de que exista
   return rows[0]
-} */
-/* 
+}
+
 async function create_user(name, email, password) {
 
   let resp
 
   // 1. Solicito un 'cliente' al pool de conexiones
-  const client = await pool.connect()
+  const client = await pool2.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const cant_users = await client.query('select * from users')
@@ -73,7 +73,7 @@ async function create_user(name, email, password) {
   // 3. Devuelvo el cliente al pool
   client.release()  
   return resp.rows[0]
-} */
+}
 
 // module.exports = { get_user, create_user }
-module.exports = { api_users, get_ping}
+module.exports = { api_users, get_ping, create_user, get_user}

@@ -13,7 +13,7 @@ const config = {
   port: 5432
 }
 
-// const pool = new Pool(config)
+const pool1 = new Pool(config)
 const pool2 = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -21,4 +21,4 @@ const pool2 = new Pool({
   }
 })
 
-module.exports = {pool2};
+module.exports = {pool1, pool2};
