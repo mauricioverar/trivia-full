@@ -1,19 +1,23 @@
 const express = require('express')
-const path = require('path')
+const path = require('path') // unir rutas o directorios
 const nunjucks = require('nunjucks') // path chokidar
+const flash = require('connect-flash') // alerts
+const { env } = require('process')
 
 const secrets = require('./secrets')
 
 const app = express()
 const port = process.env.PORT || 3000 // asignar un puerto para la nube o usar 3000
 
-// midlewares
+// middlewares
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 // se configuran archivos estáticos
 app.use(express.static('./node_modules/bootstrap/dist'))
 app.use(express.static('public'))
 
 // se configura nunjucks
-const nunj_env = nunjucks.configure(path.resolve(__dirname, "templates"), {
+const nunj_env = nunjucks.configure(path.resolve(__dirname, "views"), {
   express: app,
   autoscape: true,
   noCache: true,
@@ -21,10 +25,29 @@ const nunj_env = nunjucks.configure(path.resolve(__dirname, "templates"), {
 });
 nunj_env.addGlobal('app_name', secrets.app_name)
 
-// res api
+// con ejs sería
+/*
+const ejs = require('ejs')
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+*/
+
+// ruta index
 app.get('/', (req, res) => {
   res.render('index.html')
 })
+
+// res api
+app.get('/api/users', (req, res) => {
+  res.json([{name: 'us1'}, {name: 'us2'}])
+})
+
+// se configura uso de mensajes flash
+app.use(flash())
+
+// rutas
+/* app.use(require('./routes/auth'))
+app.use(require('./routes/routes')) */
 
 app.listen(port, () => {
   console.log(`Servidor en puerto http://localhost:${port}`)
