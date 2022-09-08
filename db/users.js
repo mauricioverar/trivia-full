@@ -1,4 +1,17 @@
 const pool = require('./pool.js')
+const User = require('../models/users')
+
+const api_users = async (req, res) => {
+  const users = await User.find()
+  res.json(users)  
+}
+const get_ping = async (req, res) => {
+  const resul = await pool.query(`SELECT NOW()`)
+  // const users = await User.find()
+  res.send({
+    message: resul.rows[0]
+  }) // desde postgresql
+}
 
 async function create_table() {
   // 1. Solicito un 'cliente' al pool de conexiones
@@ -62,4 +75,4 @@ async function create_user(name, email, password) {
 }
 
 // module.exports = { get_user, create_user }
-
+module.exports = { api_users, get_ping }

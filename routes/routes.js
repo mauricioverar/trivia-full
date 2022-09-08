@@ -2,8 +2,17 @@ const { Router } = require('express')
 const { get_questions, create_question } = require('../../Trivia/db/questions.js')
 const { get_games, create_game } = require('../../Trivia/db/games.js')
 const { get_answer } = require('../../Trivia/db/answers.js')
+const { api_users, get_ping } = require('../db/users')
+const { pool } = require('../pg.js') // pool creado en pg.js
 
 const router = Router()
+
+// res api
+router.get('/api/users', api_users)
+router.get('/ping', get_ping)
+/* router.get('/', (req, res) => {
+  res.render('index.html')
+}) */
 
 // Vamos a crear un middleware para ver si el usuario está logueado o no
 function protected_route(req, res, next) {

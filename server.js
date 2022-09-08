@@ -1,16 +1,21 @@
 const express = require('express')
+const session = require('express-session')
+const pgSession = require('connect-pg-simple')(session)
 const path = require('path') // unir rutas o directorios
 const nunjucks = require('nunjucks') // path chokidar
 const flash = require('connect-flash') // alerts
-const { env } = require('process')
-const { connectMongoDB } = require('./mongoose')
-const User = require('./models/users')
 
-const { pool } = require('./pool.js') // pool creado en pool.js
+const { env } = require('process')
+const secrets = require('./secrets')
+
+const { connectMongoDB } = require('./mongoose')
+// const User = require('./models/users')
+
+const pool = require('./db/pool.js')
+// const { pool } = require('./pool.js') // pool creado en pool.js
 
 connectMongoDB()
 
-const secrets = require('./secrets')
 
 const app = express()
 const port = process.env.PORT || 3000 // asignar un puerto para la nube o usar 3000
@@ -21,6 +26,17 @@ app.use(express.urlencoded({extended: false}))
 // se configuran archivos estáticos
 app.use(express.static('./node_modules/bootstrap/dist'))
 app.use(express.static('public'))
+
+// se configura uso de sesiones
+// https://github.com/voxpelli/node-connect-pg-simple
+app.use(session({
+  store: new pgSession({
+    pool: pool
+  }),
+  secret: '****',
+  resave: false,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }
+}))
 
 // se configura nunjucks
 const nunj_env = nunjucks.configure(path.resolve(__dirname, "views"), {
@@ -39,32 +55,32 @@ app.set('view engine', 'ejs')
 */
 
 // ruta index
-app.get('/', (req, res) => {
+/* app.get('/', (req, res) => {
   res.render('index.html')
-})
+}) */
 
-// res api
+/* // res api
 app.get('/api/users', async (req, res) => {
   const users = await User.find()
   res.json(users)
   // res.json([{name: 'us1'}, {name: 'us2'}])
-})
+}) */
 
-app.get('/ping', async (req, res) => {
+/* app.get('/ping', async (req, res) => {
   const resul = await pool.query(`SELECT NOW()`)
   // const users = await User.find()
   res.send({
     message: resul.rows[0]
   }) // desde postgresql
   // res.json([{name: 'us1'}, {name: 'us2'}])
-})
+}) */
 
 // se configura uso de mensajes flash
 app.use(flash())
 
 // rutas
-/* app.use(require('./routes/auth'))
-app.use(require('./routes/routes')) */
+app.use(require('./routes/auth'))
+app.use(require('./routes/routes'))
 
 app.listen(port, () => {
   console.log(`Servidor en puerto http://localhost:${port}`)
