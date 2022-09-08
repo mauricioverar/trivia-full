@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import navbar %}
+
+{% block main %}
+{{ navbar('/', user) }}
+<div class="container">
+  {% if user.play %}
+
+    {% if toplay[0].score == 3 %}
+
+      <div class="text-center mt-3 border border-dark border-3 text-white bg-success bg-opacity-50" id= "game_usuario" >
+        <h2>That was great, {{user.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%).</h2>
+      </div>
+    {% elif toplay[0].score == 0 %}
+      <div class="text-center mt-3 border border-dark border-3 text-white bg-danger bg-opacity-50" id= "game_usuario" >
+        <h2>Aaaagh, {{user.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%) try again.</h2>
+      </div>
+    {% else %}
+      <div class="text-center mt-3 border border-dark border-3 text-white bg-warning bg-opacity-50" id= "game_usuario" >
+        <h2>That was fine, {{user.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%).</h2>
+      </div>
+    {% endif %}
+  {% endif %}
+  <div class="row mt-5 ">
+    <div class=" border border-3 border-dark col-md-5 offset-md-3 text-center p-3 bg-secondary bg-opacity-25 fs-6">
+      <a href="/lets_play" class=" btn btn-primary shadow mb-3" >Play!</a>
+      <p>Click the button above to start the trivia game.</p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12">
+
+      <form method="post" action="/search" class="d-flex justify-content-end" role="search">
+        <input class="form-control me-2 w-50" type="search" placeholder="all" aria-label="Search" name="nombre">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 border border-3 border-dark mt-4 "  style="height: 600px;overflow: scroll;">
+    <table class="table table-striped ">
+      <thead class="sticky-top bg-dark text-white">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Score</th>
+          <th scope="col">Percentage</th>
+        </tr>
+      </thead>
+      <tbody>        
+        {% for game in games %}
+          {% if game.score %}
+            <tr>
+              <td>{{game.name}}</td>
+              <td>{{game.score}}/3</td>
+              <td>{{game.percentage}}%</td>
+            </tr>
+          {%endif%}
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+{% endblock %}

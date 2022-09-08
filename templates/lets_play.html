@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import navbar %}
+{% block main %}
+{{ navbar('/lets_play', user) }}
+<h5 class="mt-4">Hi !. {{user.name}}</h5>
+<h6>Choose an answer for each of the questions and submit the test once done.</h6>
+<h5 class="mb-3">Good luck!</h5>
+<div class="container-fluid">
+
+  <form action="/lets_play" method="post" class="mb-3 row">
+    {% for item in dat %}
+    <div class="border border-dark p-3 mb-3">
+      <input name="id" value="{{ item.id }}" hidden>
+      {% set indice=loop.index %}
+      <h6> {{ indice }}. <span class="m-2 ">{{ item.question }} </span></h6>
+
+      {% for answer in item.answers %}
+      {% if answer.text %}
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="{{answer.value}}" name="question{{ indice }}">
+        <label class="form-check-label" for="flexRadioDefault1">{{ answer.text }}</label>
+      </div>
+      {% endif %}
+      {%endfor%}
+    </div>
+    {%endfor%}
+    <div class="mt-3 mb-3 d-flex justify-content-end">
+      <a href="/" id="cancel" name="cancel" class="btn btn-outline-primary">Cancel</a>
+      <button class="ms-2 btn btn-outline-primary">Submit</button>
+    </div>
+  </form>
+
+</div>
+
+{% endblock %}
