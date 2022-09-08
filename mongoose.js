@@ -4,7 +4,7 @@ require('dotenv').config() // npm i dotenv
 
 const uri = process.env.MONGODB_URL
 
-const connectDB = async () => {
+const connectMongoDB = async () => {
   try {
     await mongoose.connect(uri || 'mongodb://localhost/testdb') // basedato nube mongodb (produccion) ó conectarse localmente a basedatos testdb (desarrollo)
     console.log('Mongodb conectada')
@@ -13,4 +13,4 @@ const connectDB = async () => {
   }
 }
 
-module.exports = { connectDB }
+module.exports = { connectMongoDB }

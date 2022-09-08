@@ -3,10 +3,12 @@ const path = require('path') // unir rutas o directorios
 const nunjucks = require('nunjucks') // path chokidar
 const flash = require('connect-flash') // alerts
 const { env } = require('process')
-const { connectDB } = require('./db')
+const { connectMongoDB } = require('./mongoose')
 const User = require('./models/users')
 
-connectDB()
+const { pool } = require('./pool.js') // pool creado en pool.js
+
+connectMongoDB()
 
 const secrets = require('./secrets')
 
@@ -45,6 +47,15 @@ app.get('/', (req, res) => {
 app.get('/api/users', async (req, res) => {
   const users = await User.find()
   res.json(users)
+  // res.json([{name: 'us1'}, {name: 'us2'}])
+})
+
+app.get('/ping', async (req, res) => {
+  const resul = await pool.query(`SELECT NOW()`)
+  // const users = await User.find()
+  res.send({
+    message: resul.rows[0]
+  }) // desde postgresql
   // res.json([{name: 'us1'}, {name: 'us2'}])
 })
 
