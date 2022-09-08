@@ -3,6 +3,9 @@ const path = require('path') // unir rutas o directorios
 const nunjucks = require('nunjucks') // path chokidar
 const flash = require('connect-flash') // alerts
 const { env } = require('process')
+const { connectDB } = require('./db')
+
+connectDB()
 
 const secrets = require('./secrets')
 
