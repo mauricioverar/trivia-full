@@ -2,8 +2,9 @@
 {% from 'macros.html' import navbar %}
 
 {% block main %}
-{{ navbar('/', user) }}
+{{ navbar('/', usuario) }}
 <div class="container">
+  <h4>Hola {{ usuario.name }}</h4>
   {% if user.play %}
 
     {% if toplay[0].score == 3 %}

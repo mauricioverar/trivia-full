@@ -61,7 +61,7 @@ app.set('view engine', 'ejs')
 // app.use(flash())
 
 // rutas
-app.use(require('./routes/auth'))
+// app.use(require('./routes/auth'))
 app.use(require('./routes/routes'))
 
 app.listen(port, () => {

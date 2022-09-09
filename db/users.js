@@ -1,5 +1,5 @@
 // const pool = require('./pool.js')
-const { pool1, pool2 } = require('./pool') // pool creado en pool.js
+const { pool } = require('./pool') // pool creado en pool.js
 const User = require('../models/users')
 
 const api_users = async (req, res) => {
@@ -7,7 +7,7 @@ const api_users = async (req, res) => {
   res.json(users)  
 }
 const get_ping = async (req, res) => {
-  const resul = await pool2.query(`SELECT NOW()`)
+  const resul = await pool.query(`SELECT NOW()`)
   // const users = await User.find()
   res.send({
     message: resul.rows[0]
@@ -16,7 +16,7 @@ const get_ping = async (req, res) => {
 
 async function create_table() {
   // 1. Solicito un 'cliente' al pool de conexiones
-  const client = await pool2.connect()
+  const client = await pool.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   await client.query(`
@@ -35,7 +35,7 @@ create_table()
 
 async function get_user(email) {
   // 1. Solicito un 'cliente' al pool de conexiones
-  const client = await pool2.connect()
+  const client = await pool.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const { rows } = await client.query(
@@ -54,7 +54,7 @@ async function create_user(name, email, password) {
   let resp
 
   // 1. Solicito un 'cliente' al pool de conexiones
-  const client = await pool2.connect()
+  const client = await pool.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const cant_users = await client.query('select * from users')

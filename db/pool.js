@@ -1,7 +1,7 @@
 const { Pool } = require('pg')
 const secrets = require('../secrets')
 
-const config = {
+/* const config = {
   user: secrets.db_user,
   host: secrets.db_host,
   database: secrets.db_name,
@@ -11,14 +11,14 @@ const config = {
   idleTimeoutMillis: 3000,
   connectionTimeoutMillis: 2000,
   port: 5432
-}
+} */
 
-const pool1 = new Pool(config)
-const pool2 = new Pool({
+// const pool1 = new Pool(config)
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
 })
 
-module.exports = {pool1, pool2};
+module.exports = {pool};
