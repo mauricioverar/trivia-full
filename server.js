@@ -11,7 +11,6 @@ const { env } = require('process')
 const secrets = require('./secrets')
 
 const { connectMongoDB } = require('./mongoose')
-// const User = require('./models/users')
 
 const {pool2} = require('./db/pool.js')
 // const { pool } = require('./pool.js') // pool creado en pool.js

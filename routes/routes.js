@@ -1,5 +1,5 @@
 const { Router } = require('express')
-// const { get_questions, create_question } = require('../db/questions')
+const { get_questions, create_question } = require('../db/questions')
 // const { get_games, create_game } = require('../db/games.js')
 // const { get_answer } = require('../db/answers.js')
 const { api_users, get_ping } = require('../db/users')
@@ -10,20 +10,22 @@ const router = Router()
 router.get('/api/users', api_users)
 router.get('/ping', get_ping)
 router.get('/', (req, res) => {
+  console.log('index ',session_user)
   res.render('index.html')
 })
 
 // Vamos a crear un middleware para ver si el usuario está logueado o no
-// function protected_route(req, res, next) {
-//   if (!req.session.user) {
-//     req.flash('errors', 'You must log in first')
-//     return res.redirect('/login')
-//   }
-//   // si llegamos hasta acá, guardamos el usuario de la sesión en una variable de los templates
-//   res.locals.user = req.session.user
-//   // finalmente, seguimos el camino original
-//   next()
-// }
+function protected_route(req, res, next) {
+  // if (!req.session.user) {
+  /* if (!req.session.user) {
+    console.log('errors', 'You must log in first')
+    return res.redirect('/login')
+  } */
+  // si llegamos hasta acá, guardamos el usuario de la sesión en una variable de los templates
+  // res.locals.user = req.session.user
+  // finalmente, seguimos el camino original
+  next()
+}
 
 
 // index GET

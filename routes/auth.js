@@ -28,18 +28,20 @@ router.post('/login', async (req, res) => {
   // 3. verificamos las contraseñas
   const son_coincidentes = await bcrypt.compare(password, user_find.password)
   if (!son_coincidentes) {
-    // req.flash('errors', 'Usuario es inexistente o contraseña incorrecta')
+    console.log('errors', 'Usuario es inexistente o contraseña incorrecta')
     return res.redirect('/login')
   }
   
   // PARTE FINAL
-  /* req.session.user = {
+  // req.session.user = {
+  session_user = {
     name: user_find.name,
     email: user_find.email,
     id: user_find.id,
     is_admin: user_find.is_admin,
     play: false
-  } */
+  }
+  console.log('login ',session_user)
   return res.redirect('/')  
 })
 
@@ -72,6 +74,7 @@ router.post('/register', async (req, res) => {
   const current_user = await get_user(email)
   if (current_user) {
     // req.flash('errors', 'Ese email ya está ocupado')
+    console.log('errors', 'Ese email ya está ocupado')
     return res.redirect('/register')
   }
   // 4. Finalmente lo agregamos a la base de dat
