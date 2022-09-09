@@ -1,9 +1,11 @@
 const express = require('express')
-// const session = require('express-session')
-// const pgSession = require('connect-pg-simple')(session)
+
+/* const session = require('express-session')
+const pgSession = require('connect-pg-simple')(session) */
+
 const path = require('path') // unir rutas o directorios
 const nunjucks = require('nunjucks') // path chokidar
-const flash = require('connect-flash') // alerts
+// const flash = require('connect-flash') // alerts
 
 const { env } = require('process')
 const secrets = require('./secrets')
@@ -11,7 +13,7 @@ const secrets = require('./secrets')
 const { connectMongoDB } = require('./mongoose')
 // const User = require('./models/users')
 
-const pool = require('./db/pool.js')
+const {pool2} = require('./db/pool.js')
 // const { pool } = require('./pool.js') // pool creado en pool.js
 
 connectMongoDB()
@@ -31,13 +33,13 @@ app.use(express.static('public'))
 // https://github.com/voxpelli/node-connect-pg-simple
 /* app.use(session({
   store: new pgSession({
-    pool: pool
+    pool: pool2
   }),
   secret: '****',
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }
-}))
- */
+})) */
+
 // se configura nunjucks
 const nunj_env = nunjucks.configure(path.resolve(__dirname, "views"), {
   express: app,
@@ -57,7 +59,7 @@ app.set('view engine', 'ejs')
 
 
 // se configura uso de mensajes flash
-app.use(flash())
+// app.use(flash())
 
 // rutas
 app.use(require('./routes/auth'))

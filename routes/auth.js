@@ -6,8 +6,10 @@ const router = Router()
 
 // ruta que carga el formulario del login
 router.get('/login', (req, res) => {
-  const messages = req.flash()
-  res.render('login.html', { messages })
+  // const messages = req.flash()
+  // res.render('login.html', { messages })
+  res.render('login.html')
+
 })
 
 // ruta que procesa el formulario de Login
@@ -19,37 +21,39 @@ router.post('/login', async (req, res) => {
   // 2. intento buscar al usuario en base a su email 
   let user_find = await get_user(email)
   if (!user_find) {
-    req.flash('errors', 'Usuario es inexistente o contraseña incorrecta')
+    // req.flash('errors', 'Usuario es inexistente o contraseña incorrecta')
     return res.redirect('/login')
   }
 
   // 3. verificamos las contraseñas
   const son_coincidentes = await bcrypt.compare(password, user_find.password)
   if (!son_coincidentes) {
-    req.flash('errors', 'Usuario es inexistente o contraseña incorrecta')
+    // req.flash('errors', 'Usuario es inexistente o contraseña incorrecta')
     return res.redirect('/login')
   }
   
   // PARTE FINAL
-  req.session.user = {
+  /* req.session.user = {
     name: user_find.name,
     email: user_find.email,
     id: user_find.id,
     is_admin: user_find.is_admin,
     play: false
-  }
+  } */
   return res.redirect('/')  
 })
 
 router.get('/logout', (req, res) => {
-  req.session.user = null 
-  req.session.name_us = undefined
+  /* req.session.user = null 
+  req.session.name_us = undefined */
   res.redirect('/login')
 })
 
 router.get('/register', (req, res) => {
-  const messages = req.flash()   
-  res.render('register.html', {messages})
+  // const messages = req.flash()   
+  // res.render('register.html', {messages})
+  res.render('register.html')
+
 })
 
 router.post('/register', async (req, res) => {
@@ -61,19 +65,20 @@ router.post('/register', async (req, res) => {
 
   // 2. validamos que contraseñas coincidan
   if (password != password_repeat) {
-    req.flash('errors', 'Las contraseñas no coinciden')
+    // req.flash('errors', 'Las contraseñas no coinciden')
     return res.redirect('/register')
   }
   // 3. validamos que no exista otro usuario con ese mismo correo
   const current_user = await get_user(email)
   if (current_user) {
-    req.flash('errors', 'Ese email ya está ocupado')
+    // req.flash('errors', 'Ese email ya está ocupado')
     return res.redirect('/register')
   }
   // 4. Finalmente lo agregamos a la base de dat
   const encrypted_pass = await bcrypt.hash(password, 10)
   const new_user = await create_user(name, email, encrypted_pass)
-  req.session.user = { id: new_user.id, name, email }
+  console.log(new_user)
+  // req.session.user = { id: new_user.id, name, email }
   // 5. y redirigimos a la ruta principal
   res.redirect('/login')
 })

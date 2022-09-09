@@ -3,7 +3,6 @@ const { Router } = require('express')
 // const { get_games, create_game } = require('../db/games.js')
 // const { get_answer } = require('../db/answers.js')
 const { api_users, get_ping } = require('../db/users')
-const { pool } = require('../pg.js') // pool creado en pg.js
 
 const router = Router()
 
@@ -15,16 +14,16 @@ router.get('/', (req, res) => {
 })
 
 // Vamos a crear un middleware para ver si el usuario está logueado o no
-// function protected_route(req, res, next) {
-//   if (!req.session.user) {
-//     req.flash('errors', 'You must log in first')
-//     return res.redirect('/login')
-//   }
-//   // si llegamos hasta acá, guardamos el usuario de la sesión en una variable de los templates
-//   res.locals.user = req.session.user
-//   // finalmente, seguimos el camino original
-//   next()
-// }
+/* function protected_route(req, res, next) {
+  if (!req.session.user) {
+    req.flash('errors', 'You must log in first')
+    return res.redirect('/login')
+  }
+  // si llegamos hasta acá, guardamos el usuario de la sesión en una variable de los templates
+  res.locals.user = req.session.user
+  // finalmente, seguimos el camino original
+  next()
+} */
 
 
 // index GET
