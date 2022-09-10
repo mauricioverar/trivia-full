@@ -4,7 +4,7 @@
 {% block main %}
 {{ navbar('/', usuario) }}
 <div class="container">
-  <h4>Hola {{ usuario.name }}</h4>
+  <h4>Hello {{ usuario.name }}</h4>
   {% if usuario.play %}
 
     {% if toplay[0].score == 3 %}
