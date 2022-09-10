@@ -1,4 +1,5 @@
 const express = require('express')
+const favicon = require('serve-favicon')
 
 /* const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session) */
@@ -27,6 +28,7 @@ app.use(express.urlencoded({extended: false}))
 // se configuran archivos estáticos
 app.use(express.static('./node_modules/bootstrap/dist'))
 app.use(express.static('public'))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // se configura uso de sesiones
 // https://github.com/voxpelli/node-connect-pg-simple
