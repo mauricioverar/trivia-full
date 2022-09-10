@@ -48,7 +48,7 @@ async function get_games(name_user) {
 
     // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
     resp = await client.query(
-      { text: `select *, name from games full join users on id(users) = user_id(games) order by percentage(games) desc` }
+      { text: `select *, name from games full join users on id(users) = user_id(games) order by percentage(games) desc, date(games) desc` }
     )
   }
 

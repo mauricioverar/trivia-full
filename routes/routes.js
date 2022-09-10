@@ -191,7 +191,11 @@ router.post('/lets_play', async (req, res) => {
     }
 
     percentage = ((result * 100) / 3).toFixed(1)
-    await create_game(result, percentage, user_id)
+    if (percentage > 0) {
+
+      await create_game(result, percentage, user_id)
+      console.log('jugada guardada')
+    }
     usuario.play = true
     res.redirect('/')
 
