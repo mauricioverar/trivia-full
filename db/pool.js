@@ -1,5 +1,5 @@
 const { Pool } = require('pg')
-const secrets = require('../secrets')
+// const secrets = require('../secrets')
 
 /* const config = {
   user: secrets.db_user,

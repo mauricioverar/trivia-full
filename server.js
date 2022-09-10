@@ -9,11 +9,11 @@ const nunjucks = require('nunjucks') // path chokidar
 // const flash = require('connect-flash') // alerts
 
 const { env } = require('process')
-const secrets = require('./secrets')
+// const secrets = require('./secrets')
 
 const { connectMongoDB } = require('./mongoose')
 
-const {pool2} = require('./db/pool.js')
+// const {pool2} = require('./db/pool.js')
 // const { pool } = require('./pool.js') // pool creado en pool.js
 
 connectMongoDB()
@@ -48,7 +48,7 @@ const nunj_env = nunjucks.configure(path.resolve(__dirname, "views"), {
   noCache: true,
   watch: true,
 });
-nunj_env.addGlobal('app_name', secrets.app_name)
+nunj_env.addGlobal('app_name', process.env.app_name)
 
 // con ejs sería
 /*

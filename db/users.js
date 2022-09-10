@@ -1,5 +1,5 @@
 // const pool = require('./pool.js')
-const { pool } = require('./pool') // pool creado en pool.js
+const { pool } = require('./pool')
 const User = require('../models/users')
 
 const api_users = async (req, res) => {
@@ -8,10 +8,9 @@ const api_users = async (req, res) => {
 }
 const get_ping = async (req, res) => {
   const resul = await pool.query(`SELECT NOW()`)
-  // const users = await User.find()
   res.send({
     message: resul.rows[0]
-  }) // desde postgresql
+  })
 }
 
 async function create_table() {
@@ -34,29 +33,21 @@ async function create_table() {
 create_table()
 
 async function get_user(email) {
-  // 1. Solicito un 'cliente' al pool de conexiones
-  const client = await pool.connect()
 
-  // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
+  const client = await pool.connect()
   const { rows } = await client.query(
     `select * from users where email=$1`,
     [email]
   )
-  // 3. Devuelvo el cliente al pool
   client.release()
 
-  // 4. retorno el primer usuario, en caso de que exista
   return rows[0]
 }
 
 async function create_user(name, email, password) {
 
   let resp
-
-  // 1. Solicito un 'cliente' al pool de conexiones
   const client = await pool.connect()
-
-  // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const cant_users = await client.query('select * from users')
   
   if (cant_users.rows == 0) {
@@ -70,10 +61,9 @@ async function create_user(name, email, password) {
       [name, email, password]
     )
   }
-  // 3. Devuelvo el cliente al pool
   client.release()  
+  
   return resp.rows[0]
 }
 
-// module.exports = { get_user, create_user }
 module.exports = { api_users, get_ping, create_user, get_user}
