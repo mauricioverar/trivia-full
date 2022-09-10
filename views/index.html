@@ -5,20 +5,20 @@
 {{ navbar('/', usuario) }}
 <div class="container">
   <h4>Hola {{ usuario.name }}</h4>
-  {% if user.play %}
+  {% if usuario.play %}
 
     {% if toplay[0].score == 3 %}
 
       <div class="text-center mt-3 border border-dark border-3 text-white bg-success bg-opacity-50" id= "game_usuario" >
-        <h2>That was great, {{user.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%).</h2>
+        <h2>That was great, {{usuario.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%).</h2>
       </div>
     {% elif toplay[0].score == 0 %}
       <div class="text-center mt-3 border border-dark border-3 text-white bg-danger bg-opacity-50" id= "game_usuario" >
-        <h2>Aaaagh, {{user.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%) try again.</h2>
+        <h2>Aaaagh, {{usuario.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%) try again.</h2>
       </div>
     {% else %}
       <div class="text-center mt-3 border border-dark border-3 text-white bg-warning bg-opacity-50" id= "game_usuario" >
-        <h2>That was fine, {{user.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%).</h2>
+        <h2>That was fine, {{usuario.name}}!  Your score is {{toplay[0].score}}/3  ({{toplay[0].percentage}}%).</h2>
       </div>
     {% endif %}
   {% endif %}

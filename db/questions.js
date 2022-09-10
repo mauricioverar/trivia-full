@@ -1,4 +1,4 @@
-const pool = require('./pool.js')
+const { pool } = require('./pool.js')
 
 async function create_table () {
   // 1. Solicito un 'cliente' al pool de conexiones

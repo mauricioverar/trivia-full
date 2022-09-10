@@ -1,4 +1,4 @@
-const pool = require('./pool.js')
+const { pool } = require('./pool.js')
 
 // create_table
 async function create_table() {

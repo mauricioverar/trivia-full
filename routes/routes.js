@@ -2,6 +2,7 @@ const { Router } = require('express')
 const bcrypt = require('bcrypt')
 const { get_user, create_user } = require('../db/users.js')
 const { api_users, get_ping } = require('../db/users')
+const { get_questions, create_question } = require('../db/questions')
 
 const router = Router()
 
@@ -16,11 +17,7 @@ let usuario = {
 // res api
 router.get('/api/users', api_users)
 router.get('/ping', get_ping)
-/* router.get('/', (req, res) => {
-  console.log('index ',usuario)
-  res.render('index.html')
-})
- */
+
 // Vamos a crear un middleware para ver si el usuario está logueado o no
 function protected_route(req, res, next) {  
   if (!usuario.name) {
@@ -50,7 +47,11 @@ router.get('/login', (req, res) => {
   // const messages = req.flash()
   // res.render('login.html', { messages })
   res.render('login.html')
+})
 
+// new_question GET
+router.get('/new_question', protected_route, (req, res) => {
+  res.render('new_question.html')
 })
 
 // ruta que procesa el formulario de Login
@@ -74,7 +75,7 @@ router.post('/login', async (req, res) => {
   }
   
   // PARTE FINAL
-  /* req.session.user = {
+  /* usuario = {
     name: user_find.name,
     email: user_find.email,
     id: user_find.id,
@@ -93,7 +94,7 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-  /* req.session.user = null 
+  /* usuario = null 
   req.session.name_us = undefined */
   res.redirect('/login')
 })
@@ -127,9 +128,30 @@ router.post('/register', async (req, res) => {
   // 4. Finalmente lo agregamos a la base de dat
   const encrypted_pass = await bcrypt.hash(password, 10)
   const new_user = await create_user(name, email, encrypted_pass)
-  // req.session.user = { id: new_user.id, name, email }
+  // usuario = { id: new_user.id, name, email }
   // 5. y redirigimos a la ruta principal
   res.redirect('/login')
+})
+
+// new_question POST
+router.post('/new_question', protected_route, async (req, res) => {
+  try {
+
+    if (usuario.is_admin == true) {
+      const question = req.body.question.trim()
+      const answer_true = req.body.answer_true.trim()
+      const false1 = req.body.answer_false1.trim()
+      const false2 = req.body.answer_false2.trim()
+      const false3 = req.body.answer_false3.trim()
+      const false4 = req.body.answer_false4.trim()
+      await create_question(question, answer_true, false1, false2, false3, false4)
+    }
+    res.redirect('/new_question')
+
+  } catch (error) {
+    console.log(error)
+  }
+
 })
 
 // 404 GET>
